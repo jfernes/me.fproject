@@ -3,8 +3,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-@Entity
-public class Usuario implements Serializable{
+@MappedSuperclass
+public abstract class Usuario implements Serializable{
 	private static final long serialVersionUID = 7411614913520604498L;
 	@Id
 	private String usuario;

@@ -8,7 +8,7 @@ public class Diagnostico implements Serializable{
 	private static final long serialVersionUID = 6294765597706644298L;
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@Column
 	private String valoracionEspecialista;
 	@Column

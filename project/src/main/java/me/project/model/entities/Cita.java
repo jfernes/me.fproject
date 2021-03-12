@@ -10,7 +10,7 @@ public class Cita implements Serializable{
 	private static final long serialVersionUID = -6565864941172902199L;
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	private Date fechaHora;
 	private String motivoCita;
 	@OneToOne
