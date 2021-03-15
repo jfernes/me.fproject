@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 public class Medico extends Usuario{
 	private static final long serialVersionUID = 2772355728921694683L;
-	@Id
+	@Column(name = "numColegiado")
 	private String numColegiado; 
 	private ArrayList<Paciente> pacientes;
 	

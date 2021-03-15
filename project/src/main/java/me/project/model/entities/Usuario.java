@@ -3,16 +3,18 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-@MappedSuperclass
+@Entity
+@Table(name = "USUARIO")
 public abstract class Usuario implements Serializable{
 	private static final long serialVersionUID = 7411614913520604498L;
 	@Id
+	@Column(name = "usuario")
 	private String usuario;
-	@Column
+	@Column(name = "nombre")
 	private String nombre;
-	@Column
+	@Column(name = "apellidos")
 	private String apellidos;
-	@Column
+	@Column(name = "clave")
 	private String clave;
 	
 

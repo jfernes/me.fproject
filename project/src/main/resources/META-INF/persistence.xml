@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+             http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+
+  <persistence-unit name="me-citamedia">
+  <!--CLASES-->
+  <class>me.project.model.entities.Cita</class>
+  <class>me.project.model.entities.Diagnostico</class>
+  <class>me.project.model.entities.Medico</class>
+  <class>me.project.model.entities.Paciente</class>
+  <class>me.project.model.entities.Usuario</class>
+  
+    <properties>
+        <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
+        <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:0.0.0.0:32118:XEPDB1" />
+        <property name="javax.persistence.jdbc.user" value="julian" />
+        <property name="javax.persistence.jdbc.password" value="julian" />
+        <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+        <property name="hibernate.hbm2ddl.auto" value="validate" />
+    </properties>
+  </persistence-unit>
+
+</persistence>

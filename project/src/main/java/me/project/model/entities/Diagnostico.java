@@ -8,10 +8,11 @@ public class Diagnostico implements Serializable{
 	private static final long serialVersionUID = 6294765597706644298L;
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	private Long id;
-	@Column
+	@Column(name = "valoracionEspecialista")
 	private String valoracionEspecialista;
-	@Column
+	@Column(name = "enfermedad")
 	private String enfermedad;
 	//TODO revisar si se deja
 	@OneToOne(mappedBy = "diagnostico")

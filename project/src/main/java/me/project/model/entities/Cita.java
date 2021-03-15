@@ -10,14 +10,17 @@ public class Cita implements Serializable{
 	private static final long serialVersionUID = -6565864941172902199L;
 	@Id
 	@GeneratedValue
+	@Column(name = "id")
 	private Long id;
+	@Column(name = "fechaHora")
 	private Date fechaHora;
+	@Column(name = "motivoCita")
 	private String motivoCita;
 	@OneToOne
 	private Diagnostico diagnostico;
-	
+	@Column(name = "medico")
 	private Medico medico;
-	
+	@Column(name = "paciente")
 	private Paciente paciente;
 	
 	public Cita(Date fechaHora, String motivoCita, Medico medico, Paciente paciente) {
