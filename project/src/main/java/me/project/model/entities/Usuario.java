@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "USUARIO")
-public abstract class Usuario implements Serializable{
+public class Usuario implements Serializable{
 	private static final long serialVersionUID = 7411614913520604498L;
 	@Id
 	@Column(name = "usuario")

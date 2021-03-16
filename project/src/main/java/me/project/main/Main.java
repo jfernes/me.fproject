@@ -18,7 +18,7 @@ public class Main {
 		m.persist(p);
 		m.getTransaction().commit();
 		
-		List<Paciente> l = (List<Paciente>) m.createQuery("FROM PACIENTE").getResultList();
+		List<Paciente> l = (List<Paciente>) m.createQuery("SELECT * FROM PACIENTE").getResultList();
 		for (Paciente pac : l) {
 			System.out.println(pac.toString());
 		}

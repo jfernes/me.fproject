@@ -4,7 +4,7 @@
              http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
-  <persistence-unit name="me-citamedia">
+  <persistence-unit name="me-citamedica">
   <!--CLASES-->
   <class>me.project.model.entities.Cita</class>
   <class>me.project.model.entities.Diagnostico</class>
@@ -14,7 +14,7 @@
   
     <properties>
         <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
-        <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:0.0.0.0:32118:XEPDB1" />
+        <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:32118/XEPDB1" />
         <property name="javax.persistence.jdbc.user" value="julian" />
         <property name="javax.persistence.jdbc.password" value="julian" />
         <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />

@@ -17,10 +17,13 @@ public class Cita implements Serializable{
 	@Column(name = "motivoCita")
 	private String motivoCita;
 	@OneToOne
+	@JoinColumn(name = "diagnostico")
 	private Diagnostico diagnostico;
-	@Column(name = "medico")
+	@OneToOne
+	@JoinColumn(name = "medico")
 	private Medico medico;
-	@Column(name = "paciente")
+	@OneToOne
+	@JoinColumn(name = "paciente")
 	private Paciente paciente;
 	
 	public Cita(Date fechaHora, String motivoCita, Medico medico, Paciente paciente) {

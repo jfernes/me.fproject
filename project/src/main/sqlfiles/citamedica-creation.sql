@@ -34,7 +34,7 @@ CREATE TABLE MEDICO_PACIENTE(
 CREATE TABLE CITA(
 	id NUMBER(20,0) 	NOT NULL, --todas los valores posibles de un long
 	motivoCita VARCHAR2(500) NOT NULL,
-	fechaHora VARCHAR2(15) NOT NULL, --Formato: dd-mm-yyyy/hh:mm
+	fechaHora DATE NOT NULL, 
 	diagnostico NUMBER(20,0) NULL,
     medico VARCHAR2(30) NOT NULL,
     paciente VARCHAR2(30) 	NOT NULL,

@@ -1,7 +1,6 @@
 package me.project.model.entities;
 
 import java.util.ArrayList;
-
 import javax.persistence.*;
 
 @Entity
