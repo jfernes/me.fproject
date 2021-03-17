@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Cita implements Serializable{
 	private static final long serialVersionUID = -6565864941172902199L;
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "fechaHora")

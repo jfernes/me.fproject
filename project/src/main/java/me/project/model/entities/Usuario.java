@@ -4,10 +4,14 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "USUARIO")
 public class Usuario implements Serializable{
 	private static final long serialVersionUID = 7411614913520604498L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private Long id;
 	@Column(name = "usuario")
 	private String usuario;
 	@Column(name = "nombre")

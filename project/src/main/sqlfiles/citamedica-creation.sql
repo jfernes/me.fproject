@@ -1,31 +1,32 @@
 CREATE TABLE USUARIO(
+    id NUMBER(20,0) 	NOT NULL,
     nombre 		VARCHAR2(40) 	NOT NULL,
 	apellidos 	VARCHAR2(100) 	NOT NULL,
 	usuario 	VARCHAR2(30) 	NOT NULL,
 	clave 		VARCHAR2(30) 	NOT NULL,
-    CONSTRAINT usuario_pk PRIMARY KEY (usuario)
+    CONSTRAINT usuario_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE PACIENTE(
-    usuario 	VARCHAR2(30) 	NOT NULL,
+    usuario 	NUMBER(20,0) 	NOT NULL,
 	nss 		VARCHAR2(11)	NOT NULL,
 	numTarjeta	VARCHAR2(20) 	NOT NULL,
 	telefono 	VARCHAR2(9) 	NOT NULL,
 	direccion	VARCHAR2(100)	NOT NULL,
 	CONSTRAINT paciente_pk PRIMARY KEY(usuario),
-    CONSTRAINT pac_fk_usu FOREIGN KEY (usuario) REFERENCES USUARIO(usuario)
+    CONSTRAINT pac_fk_usu FOREIGN KEY (usuario) REFERENCES USUARIO(id)
 );
 
 CREATE TABLE MEDICO(
-    usuario 	VARCHAR2(30) 	NOT NULL,
+    usuario 	NUMBER(20,0) 	NOT NULL,
 	numColegiado	VARCHAR2(9)		NOT NULL,
 	CONSTRAINT medico_pk PRIMARY KEY(usuario),
-    CONSTRAINT med_fk_usu FOREIGN KEY (usuario) REFERENCES USUARIO(usuario)
+    CONSTRAINT med_fk_usu FOREIGN KEY (usuario) REFERENCES USUARIO(id)
 );
 
 CREATE TABLE MEDICO_PACIENTE(
-	medico 		VARCHAR2(30) NOT NULL,
-	paciente 	VARCHAR2(30) NOT NULL,
+	medico 		NUMBER(20,0) NOT NULL,
+	paciente 	NUMBER(20,0) NOT NULL,
 	CONSTRAINT medpac_pk PRIMARY KEY(medico),
 	CONSTRAINT medpac_fk_med FOREIGN KEY(medico) REFERENCES MEDICO(usuario),
 	CONSTRAINT medpac_fk_pac FOREIGN KEY(paciente) REFERENCES PACIENTE(usuario)
@@ -36,8 +37,8 @@ CREATE TABLE CITA(
 	motivoCita VARCHAR2(500) NOT NULL,
 	fechaHora DATE NOT NULL, 
 	diagnostico NUMBER(20,0) NULL,
-    medico VARCHAR2(30) NOT NULL,
-    paciente VARCHAR2(30) 	NOT NULL,
+    medico NUMBER(20,0) NOT NULL,
+    paciente NUMBER(20,0) 	NOT NULL,
 	CONSTRAINT cita_pk PRIMARY KEY(id),
     CONSTRAINT cita_fk_med FOREIGN KEY (medico) REFERENCES MEDICO(usuario),
     CONSTRAINT cita_fk_pac FOREIGN KEY (paciente) REFERENCES PACIENTE(usuario)

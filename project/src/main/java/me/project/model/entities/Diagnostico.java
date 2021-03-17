@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class Diagnostico implements Serializable{
 	private static final long serialVersionUID = 6294765597706644298L;
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "valoracionEspecialista")
