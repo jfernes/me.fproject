@@ -8,12 +8,13 @@ public class Paciente extends Usuario{
 	private static final long serialVersionUID = -2408669723210022854L;
 	@Column(name = "nss")
 	private String nss;
-	@Column(name = "numTarjeta")
+	@Column(name = "num_tarjeta")
 	private String numTarjeta;
 	@Column(name = "telefono")
 	private String telefono;
 	@Column(name = "direccion")
 	private String direccion;
+	@Transient
 	private ArrayList<Medico> medicos;
 
 	public Paciente(String nombre, String apellidos, String usuario, String clave,

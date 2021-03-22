@@ -11,22 +11,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import me.project.model.entities.Usuario;
 import me.project.repository.IUsuarioDAO;
+import me.project.service.IUsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
 	
 	@Autowired
-	private IUsuarioDAO dao;
+	IUsuarioService service;
 	
 	@PostMapping
-	public void create (@RequestBody Usuario usuario) {
-		dao.save(usuario);
+	public Usuario create (@RequestBody Usuario usuario) {
+		return service.save(usuario);
 	}
 	
 	@GetMapping
-	public List<Usuario> read (){
-		return dao.findAll();
+	public List<Usuario> read(){
+		return service.findAll();
 	}
+	
+	
 
 }

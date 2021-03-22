@@ -1,7 +1,7 @@
 package me.project.model.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.*;
 
@@ -12,9 +12,9 @@ public class Cita implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
-	@Column(name = "fechaHora")
-	private Date fechaHora;
-	@Column(name = "motivoCita")
+	@Column(name = "fecha_hora")
+	private LocalDate fechaHora;
+	@Column(name = "motivo_cita")
 	private String motivoCita;
 	@OneToOne
 	@JoinColumn(name = "diagnostico")
@@ -26,18 +26,33 @@ public class Cita implements Serializable{
 	@JoinColumn(name = "paciente")
 	private Paciente paciente;
 	
-	public Cita(Date fechaHora, String motivoCita, Medico medico, Paciente paciente) {
+	public Cita() {}
+	
+	public Cita(LocalDate fechaHora, String motivoCita, Medico medico, Paciente paciente) {
 		this.fechaHora = fechaHora;
 		this.motivoCita = motivoCita;
 		this.medico = medico;
 		this.paciente = paciente;
 	}
+	
+	public boolean isToday(LocalDate date) {
+		return (fechaHora.getDayOfYear() == date.getDayOfYear()) 
+				&& (fechaHora.getYear() == date.getYear());
+	}
+	
+	public boolean isMedico(Long id) {
+		return medico.getId().equals(id);
+	}
+	
+	public boolean isPaciente(Long id) {
+		return paciente.getId().equals(id);
+	}
 
-	public Date getFechaHora() {
+	public LocalDate getFechaHora() {
 		return fechaHora;
 	}
 
-	public void setFechaHora(Date fechaHora) {
+	public void setFechaHora(LocalDate fechaHora) {
 		this.fechaHora = fechaHora;
 	}
 
@@ -73,5 +88,11 @@ public class Cita implements Serializable{
 		this.paciente = paciente;
 	}
 	
+	public Long getId() {
+		return id;
+	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

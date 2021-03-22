@@ -21,6 +21,10 @@ public class Usuario implements Serializable{
 	@Column(name = "clave")
 	private String clave;
 	
+	public Usuario() {
+
+	}
+	
 
 	public Usuario(String nombre, String apellidos, String usuario, String clave) {
 		this.nombre = nombre;
@@ -61,6 +65,11 @@ public class Usuario implements Serializable{
 		this.clave = clave;
 	}
 	
+	public Long getId() {
+		return id;
+	}
 	
-
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

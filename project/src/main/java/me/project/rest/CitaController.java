@@ -7,36 +7,28 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.project.model.entities.Cita;
 import me.project.repository.ICitaDAO;
+import me.project.service.ICitaService;
 
 @RestController
 @RequestMapping("/citas")
 public class CitaController {
-	@Autowired
-	private ICitaDAO dao;
 	
-	@GetMapping
-	public void create (Cita cita) {
-		dao.save(cita);
-	}
+	@Autowired
+	ICitaService service;
 	
 	@PostMapping
+	public Cita create (@RequestBody Cita cita) {
+		return service.save(cita);
+	}
+	
+	@GetMapping
 	public List<Cita> read(){
-		return dao.findAll();
+		return service.findAll();
 	}
-	
-	@PutMapping
-	public void update (Cita cita) {
-		dao.save(cita);
-	}
-	
-	@DeleteMapping(value = "/{id}")
-	public void delete(Long id) {
-		dao.deleteById(id);
-	}
-
 }

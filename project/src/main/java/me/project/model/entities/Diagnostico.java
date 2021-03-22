@@ -10,7 +10,7 @@ public class Diagnostico implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
-	@Column(name = "valoracionEspecialista")
+	@Column(name = "valoracion_especialista")
 	private String valoracionEspecialista;
 	@Column(name = "enfermedad")
 	private String enfermedad;

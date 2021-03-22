@@ -7,5 +7,5 @@ import me.project.model.entities.Diagnostico;
 
 @Repository
 public interface IDiagnosticoDAO extends JpaRepository<Diagnostico, Long>{
-
+	
 }
