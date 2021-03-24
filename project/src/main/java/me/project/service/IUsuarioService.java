@@ -11,7 +11,7 @@ public interface IUsuarioService {
 	
 	public Optional<Usuario> findById(Long id);
 	
-	public Usuario save(Usuario usuario);
+	public Boolean save(Usuario usuario);
 	
 	public void deleteById(Long id);
 

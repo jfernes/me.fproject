@@ -1,6 +1,7 @@
 package me.project.model.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -8,8 +9,15 @@ public class Medico extends Usuario{
 	private static final long serialVersionUID = 2772355728921694683L;
 	@Column(name = "num_colegiado")
 	private String numColegiado; 
-	@Transient
-	private ArrayList<Paciente> pacientes;
+	@ManyToMany
+	@JoinTable(name = "medico_paciente",
+		joinColumns = @JoinColumn(name = "medico"),
+		inverseJoinColumns = @JoinColumn(name = "paciente"))
+	private List<Paciente> pacientes;
+	
+	public Medico() {
+		super();
+	}
 	
 	public Medico(String nombre, String apellidos, String usuario, String clave, String numColegiado) {
 		super(nombre, apellidos, usuario, clave);
@@ -25,7 +33,7 @@ public class Medico extends Usuario{
 		this.numColegiado = numColegiado;
 	}
 
-	public ArrayList<Paciente> getPacientes() {
+	public List<Paciente> getPacientes() {
 		return pacientes;
 	}
 

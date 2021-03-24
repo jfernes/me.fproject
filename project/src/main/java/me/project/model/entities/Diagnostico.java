@@ -18,6 +18,8 @@ public class Diagnostico implements Serializable{
 	@OneToOne(mappedBy = "diagnostico")
 	private Cita cita;
 	
+	public Diagnostico() {}
+	
 	public Diagnostico(String valoracionEspecialista, String enfermedad, Cita cita) {
 		this.valoracionEspecialista = valoracionEspecialista;
 		this.enfermedad = enfermedad;

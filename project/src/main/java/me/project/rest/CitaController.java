@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import me.project.dto.CitaDTO;
 import me.project.model.entities.Cita;
 import me.project.repository.ICitaDAO;
 import me.project.service.ICitaService;
@@ -22,10 +23,11 @@ public class CitaController {
 	@Autowired
 	ICitaService service;
 	
+	/*
 	@PostMapping
-	public Cita create (@RequestBody Cita cita) {
+	public Cita create (@RequestBody CitaDTO citaDTO) {
 		return service.save(cita);
-	}
+	} */
 	
 	@GetMapping
 	public List<Cita> read(){

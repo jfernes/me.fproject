@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+
 @Entity
 public class Cita implements Serializable{
 	private static final long serialVersionUID = -6565864941172902199L;

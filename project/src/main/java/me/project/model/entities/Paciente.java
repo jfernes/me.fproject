@@ -1,6 +1,7 @@
 package me.project.model.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -14,8 +15,12 @@ public class Paciente extends Usuario{
 	private String telefono;
 	@Column(name = "direccion")
 	private String direccion;
-	@Transient
-	private ArrayList<Medico> medicos;
+	@ManyToMany(mappedBy = "pacientes")
+	private List<Medico> medicos;
+	
+	public Paciente() {
+		super();
+	}
 
 	public Paciente(String nombre, String apellidos, String usuario, String clave,
 			String nss, String numTarjeta, String telefono, String direccion) {
@@ -59,7 +64,7 @@ public class Paciente extends Usuario{
 		this.direccion = direccion;
 	}
 
-	public ArrayList<Medico> getMedicos() {
+	public List<Medico> getMedicos() {
 		return medicos;
 	}
 

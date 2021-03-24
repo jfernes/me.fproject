@@ -26,13 +26,17 @@ public class UsuarioService implements IUsuarioService{
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<Usuario> findById(Long id) {
-		return findById(id);
+		return dao.findById(id);
 	}
 
 	@Override
 	@Transactional
-	public Usuario save(Usuario usuario) {
-		return dao.save(usuario);
+	public Boolean save(Usuario usuario) {
+		if (dao.findById(usuario.getId()).isPresent()) {
+			return false;
+		}
+		dao.save(usuario);
+		return true;
 	}
 
 	@Override
