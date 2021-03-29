@@ -12,9 +12,11 @@ public interface IPacienteService {
 	
 	public Optional<Paciente> findById(Long id);
 	
-	public Paciente save(Paciente paciente);
+	public Boolean save(Paciente paciente);
 	
 	public void deleteById(Long id);
 	
 	public List<Medico> findMedicos(Long id);
+	
+	public boolean addMedico(Long pacienteId, Long medicoId);
 }

@@ -3,6 +3,8 @@ package me.project.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import me.project.model.entities.Paciente;
+
 public class PacienteDTO implements Serializable{
 	private static final long serialVersionUID = 8934212393586767302L;
 	
@@ -15,7 +17,7 @@ public class PacienteDTO implements Serializable{
 	private String numTarjeta;
 	private String telefono;
 	private String direccion;
-	private List<Long> pacientes;
+	private List<Long> medicos;
 	
 	public Long getId() {
 		return id;
@@ -71,12 +73,13 @@ public class PacienteDTO implements Serializable{
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	public List<Long> getPacientes() {
-		return pacientes;
+	public List<Long> getMedicos() {
+		return medicos;
 	}
-	public void setPacientes(List<Long> pacientes) {
-		this.pacientes = pacientes;
+	public void setMedicos(List<Long> medicos) {
+		this.medicos = medicos;
 	}
+
 	
 	
 	

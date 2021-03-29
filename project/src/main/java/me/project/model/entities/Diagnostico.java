@@ -49,6 +49,16 @@ public class Diagnostico implements Serializable{
 	public void setCita(Cita cita) {
 		this.cita = cita;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	
 	
 	
 }

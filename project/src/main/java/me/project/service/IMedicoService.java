@@ -10,9 +10,11 @@ public interface IMedicoService {
 	
 	public Optional<Medico> findById(Long id);
 
-	public Medico save(Medico medico);
+	public Boolean save(Medico medico);
 	
 	public void deleteById(Long id);
 	
 	public List<Paciente> findPacientes(Long id);
+	
+	public Boolean addPaciente(Long medicoId, Long pacienteId);
 }

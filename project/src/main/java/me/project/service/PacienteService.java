@@ -9,13 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import me.project.model.entities.Medico;
 import me.project.model.entities.Paciente;
+import me.project.repository.IMedicoDAO;
 import me.project.repository.IPacienteDAO;
 
 @Service
 public class PacienteService implements IPacienteService{
 	
 	@Autowired
-	IPacienteDAO dao;
+	private IPacienteDAO dao;
+	@Autowired
+	private IMedicoDAO mdao;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -31,8 +34,12 @@ public class PacienteService implements IPacienteService{
 
 	@Override
 	@Transactional
-	public Paciente save(Paciente paciente) {
-		return dao.save(paciente);
+	public Boolean save(Paciente paciente) {
+		if (dao.findById(paciente.getId()).isPresent()) {
+			return false;
+		}
+		dao.save(paciente);
+		return true;
 	}
 
 	@Override
@@ -44,7 +51,26 @@ public class PacienteService implements IPacienteService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Medico> findMedicos(Long id) {
+		/*//PROVISIONAL
+		List<Medico> medicos = mdao.findAll().stream()
+				.filter(m -> m.getId().equals(id))
+				.collect(Collectors.toList());
+		return medicos; */
 		return dao.findMedicos(id);
+	}
+	
+	@Transactional
+	public boolean addMedico(Long pacienteId, Long medicoId) {
+		Optional<Medico> med = mdao.findById(medicoId);
+		Optional<Paciente> pac = dao.findById(pacienteId);
+		if (med.isPresent() && pac.isPresent()) {
+			Paciente paciente = pac.get();
+			Medico medico = med.get();
+			paciente.addMedico(medico);
+			dao.save(paciente);
+			return true;
+		}
+		return false;
 	}
 
 }

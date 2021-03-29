@@ -32,8 +32,11 @@ public class CitaService implements ICitaService{
 
 	@Override
 	@Transactional
-	public Cita save(Cita cita) {
-		return dao.save(cita);
+	public boolean save(Cita cita) {
+		if (dao.findById(cita.getId()).isPresent())
+			return false;
+		dao.save(cita);
+		return true;
 	}
 
 	@Override

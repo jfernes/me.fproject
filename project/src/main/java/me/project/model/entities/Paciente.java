@@ -15,11 +15,12 @@ public class Paciente extends Usuario{
 	private String telefono;
 	@Column(name = "direccion")
 	private String direccion;
-	@ManyToMany(mappedBy = "pacientes")
+	@ManyToMany(mappedBy = "pacientes", fetch = FetchType.EAGER)
 	private List<Medico> medicos;
 	
 	public Paciente() {
 		super();
+		medicos = new ArrayList<Medico>();
 	}
 
 	public Paciente(String nombre, String apellidos, String usuario, String clave,
@@ -30,6 +31,11 @@ public class Paciente extends Usuario{
 		this.numTarjeta = numTarjeta;
 		this.telefono = telefono;
 		medicos = new ArrayList<Medico>();
+	}
+	
+	public void addMedico(Medico medico) {
+		if (!medicos.contains(medico))
+			medicos.add(medico);
 	}
 
 	public String getNss() {

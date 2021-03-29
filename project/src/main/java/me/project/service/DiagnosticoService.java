@@ -40,8 +40,11 @@ public class DiagnosticoService implements IDiagnosticoService{
 
 	@Override
 	@Transactional
-	public Diagnostico save(Diagnostico diagnostico) {
-		return dao.save(diagnostico);
+	public boolean save(Diagnostico diagnostico) {
+		if (dao.findById(diagnostico.getId()).isPresent())
+			return false;
+		dao.save(diagnostico);
+		return true;
 	}
 
 	@Override

@@ -1,8 +1,9 @@
 package me.project.rest.converter;
 
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 
 import me.project.dto.CitaDTO;
@@ -19,13 +20,19 @@ import me.project.model.entities.Usuario;
 @Component
 public class Converter {
 	
+	private static Converter converter;
+	
 	private ModelMapper mapper;
 	
-	public Converter() {
+	private Converter() {
 		mapper = new ModelMapper();
 	}
 	
-	
+	public static Converter getConverter() {
+		if (converter == null)
+			converter = new Converter();
+		return converter;
+	}
 	
 	public Usuario UDTOtoU(UsuarioDTO usuarioDTO) {
 		Usuario usuario = mapper.map(usuarioDTO, Usuario.class);
@@ -42,7 +49,15 @@ public class Converter {
 	}
 	
 	public PacienteDTO PtoPDTO(Paciente paciente) {
-		return mapper.map(paciente, PacienteDTO.class);
+		//no mapeo los medicos para hacerlo yo a mano
+		PacienteDTO dto = mapper.typeMap(Paciente.class, PacienteDTO.class)
+				.addMappings(mappr -> mappr.skip(PacienteDTO::setMedicos))
+				.map(paciente);
+		// mapeo los medicos
+		dto.setMedicos(paciente.getMedicos().stream()
+				.map(m -> m.getId())
+				.collect(Collectors.toList()));
+		return dto;		
 	}
 	
 	public Medico MDTOtoM(MedicoDTO medicoDTO) {
@@ -50,7 +65,15 @@ public class Converter {
 	}
 	
 	public MedicoDTO MtoMDTO(Medico medico) {
-		return mapper.map(medico, MedicoDTO.class);
+		
+		MedicoDTO dto = mapper.typeMap(Medico.class, MedicoDTO.class)
+				.addMappings(mappr -> mappr.skip(MedicoDTO::setPacientes))
+				.map(medico);
+		//mapeo los pacientes
+		dto.setPacientes(medico.getPacientes().stream()
+				.map(p -> p.getId())
+				.collect(Collectors.toList()));
+		return dto;
 	}
 	
 	public Cita CDTOtoC(CitaDTO citaDTO) {

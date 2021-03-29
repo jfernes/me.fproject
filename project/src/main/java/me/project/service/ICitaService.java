@@ -17,7 +17,7 @@ public interface ICitaService {
 	
 	public List<Cita> findByPaciente(Long pacienteId);
 	
-	public Cita save(Cita cita);
+	public boolean save(Cita cita);
 	
 	public void deleteById(Long id);
 	

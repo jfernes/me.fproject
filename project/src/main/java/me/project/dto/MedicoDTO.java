@@ -3,6 +3,8 @@ package me.project.dto;
 import java.io.Serializable;
 import java.util.List;
 
+
+
 public class MedicoDTO implements Serializable{
 	
 	private static final long serialVersionUID = -4327391224292363507L;

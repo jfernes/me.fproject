@@ -13,7 +13,7 @@ public interface IDiagnosticoService {
 	
 	public List<Diagnostico> findByCita(Long citaId);
 	
-	public Diagnostico save(Diagnostico diagnostico);
+	public boolean save(Diagnostico diagnostico);
 
 	public void deleteById(Long id); 
 }

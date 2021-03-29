@@ -2,6 +2,7 @@ package me.project.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.project.dto.UsuarioDTO;
+import me.project.model.entities.Medico;
 import me.project.model.entities.Usuario;
 import me.project.rest.converter.Converter;
 import me.project.service.IUsuarioService;
@@ -24,7 +26,7 @@ public class UsuarioController {
 	
 	@Autowired
 	private IUsuarioService service;
-	private Converter converter = new Converter(); 
+	private Converter converter = Converter.getConverter(); 
 	
 	
 	
@@ -48,8 +50,9 @@ public class UsuarioController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<UsuarioDTO> findById(@PathVariable Long id){
-		if (service.findById(id).isPresent()) {
-			return ResponseEntity.ok(converter.UtoUDTO(service.findById(id).get()));
+		Optional<Usuario> opt = service.findById(id);
+		if (opt.isPresent()) {
+			return ResponseEntity.ok(converter.UtoUDTO(opt.get()));
 		}
 		return ResponseEntity.notFound().build();
 	}
