@@ -1,6 +1,6 @@
 package me.project.service;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,13 +10,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import me.project.model.entities.Cita;
+import me.project.model.entities.Diagnostico;
 import me.project.repository.ICitaDAO;
+import me.project.repository.IDiagnosticoDAO;
 
 @Service
 public class CitaService implements ICitaService{
 	
 	@Autowired
 	private ICitaDAO dao;
+	@Autowired
+	private IDiagnosticoDAO dDao;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -47,7 +51,7 @@ public class CitaService implements ICitaService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Cita> findByDate(LocalDate date) {
+	public List<Cita> findByDate(Date date) {
 		List<Cita> out = dao.findAll().stream()
 				.filter(c -> c.isToday(date))
 				.collect(Collectors.toList());
@@ -71,5 +75,20 @@ public class CitaService implements ICitaService{
 				.collect(Collectors.toList());
 		return out;
 	}
+
+	@Override
+	@Transactional
+	public boolean addDiagnostico(Long citaId, Diagnostico diagnostico) {
+		Optional<Cita> opt = dao.findById(citaId);
+		if (!opt.isPresent() || opt.get().getDiagnostico() != null)
+			return false;
+		Cita cita = opt.get();
+		Diagnostico d = dDao.save(diagnostico);
+		cita.setDiagnostico(d);
+		dao.save(cita);
+		return true;
+	}
+	
+	
 
 }

@@ -1,8 +1,8 @@
 package me.project.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,15 +27,6 @@ public class DiagnosticoService implements IDiagnosticoService{
 	@Transactional(readOnly = true)
 	public Optional<Diagnostico> findById(Long id) {
 		return dao.findById(id);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Diagnostico> findByCita(Long citaId) {
-		List<Diagnostico> out = dao.findAll().stream()
-				.filter(d -> d.getCita().getId().equals(citaId))
-				.collect(Collectors.toList());
-		return out;
 	}
 
 	@Override

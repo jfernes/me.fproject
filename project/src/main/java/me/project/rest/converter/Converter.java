@@ -1,9 +1,10 @@
 package me.project.rest.converter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-
 import org.springframework.stereotype.Component;
 
 import me.project.dto.CitaDTO;
@@ -76,12 +77,34 @@ public class Converter {
 		return dto;
 	}
 	
-	public Cita CDTOtoC(CitaDTO citaDTO) {
-		return mapper.map(citaDTO, Cita.class);
+	public Cita CDTOtoC(CitaDTO citaDTO, Medico medico, Paciente paciente) {
+		Cita cita = mapper.typeMap(CitaDTO.class, Cita.class)
+				.addMappings(mappr -> mappr.skip(Cita::setFechaHora))
+				.addMappings(mappr -> mappr.skip(Cita::setMedico))
+				.addMappings(mappr -> mappr.skip(Cita::setPaciente))
+				.map(citaDTO);
+		try {
+			cita.setFechaHora(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(citaDTO.getFechaHora()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		cita.setMedico(medico);
+		cita.setPaciente(paciente);
+		return cita;
 	}
 	
 	public CitaDTO CtoCDTO(Cita cita) {
-		return mapper.map(cita, CitaDTO.class);
+		CitaDTO dto = mapper.typeMap(Cita.class, CitaDTO.class)
+				.addMappings(mappr -> mappr.skip(CitaDTO::setMedico))
+				.addMappings(mappr -> mappr.skip(CitaDTO::setPaciente))
+				.addMappings(mappr -> mappr.skip(CitaDTO::setDiagnostico))
+				.addMappings(mappr -> mappr.skip(CitaDTO::setFechaHora))
+				.map(cita);
+		//dto.setDiagnostico(cita.getDiagnostico().getId());
+		dto.setMedico(cita.getMedico().getId());
+		dto.setPaciente(cita.getPaciente().getId());
+		dto.setFechaHora(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cita.getFechaHora()));
+		return dto;
 	}
 	
 	public Diagnostico DDTOtoD (DiagnosticoDTO diagnosticoDTO) {

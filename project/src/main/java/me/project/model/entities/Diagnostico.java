@@ -14,16 +14,12 @@ public class Diagnostico implements Serializable{
 	private String valoracionEspecialista;
 	@Column(name = "enfermedad")
 	private String enfermedad;
-	//TODO revisar si se deja
-	@OneToOne(mappedBy = "diagnostico")
-	private Cita cita;
-	
+
 	public Diagnostico() {}
 	
 	public Diagnostico(String valoracionEspecialista, String enfermedad, Cita cita) {
 		this.valoracionEspecialista = valoracionEspecialista;
 		this.enfermedad = enfermedad;
-		this.cita = cita;
 	}
 
 	public String getValoracionEspecialista() {
@@ -42,20 +38,18 @@ public class Diagnostico implements Serializable{
 		this.enfermedad = enfermedad;
 	}
 
-	public Cita getCita() {
-		return cita;
-	}
-
-	public void setCita(Cita cita) {
-		this.cita = cita;
-	}
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	@Override
+	public String toString() {
+		return "Diagnostico [id=" + id + ", valoracionEspecialista=" + valoracionEspecialista + ", enfermedad="
+				+ enfermedad + "]";
 	}
 	
 	

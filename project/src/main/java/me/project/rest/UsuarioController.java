@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.project.dto.UsuarioDTO;
-import me.project.model.entities.Medico;
 import me.project.model.entities.Usuario;
 import me.project.rest.converter.Converter;
 import me.project.service.IUsuarioService;

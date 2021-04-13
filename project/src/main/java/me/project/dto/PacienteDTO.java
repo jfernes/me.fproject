@@ -3,8 +3,6 @@ package me.project.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import me.project.model.entities.Paciente;
-
 public class PacienteDTO implements Serializable{
 	private static final long serialVersionUID = 8934212393586767302L;
 	

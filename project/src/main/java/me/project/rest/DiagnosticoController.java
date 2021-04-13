@@ -24,8 +24,7 @@ import me.project.rest.converter.Converter;
 public class DiagnosticoController {
 	
 	@Autowired
-	IDiagnosticoService service;
-	
+	private IDiagnosticoService service;
 	private Converter converter = Converter.getConverter();
 	
 	@GetMapping
@@ -58,14 +57,6 @@ public class DiagnosticoController {
 	public ResponseEntity<String> deleteById(@PathVariable Long id){
 		service.deleteById(id);
 		return ResponseEntity.ok("Diagnostico eliminado correctamente");
-	}
-	
-	@GetMapping("/cita/{id}")
-	public ResponseEntity<List<DiagnosticoDTO>> findByCita(@PathVariable Long id){	
-		List<DiagnosticoDTO> out = new ArrayList<DiagnosticoDTO>();
-		service.findByCita(id).stream()
-			.forEach(c -> out.add(converter.DtoDDTO(c)));
-		return ResponseEntity.ok(out);
 	}
 	
 

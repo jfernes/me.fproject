@@ -1,21 +1,17 @@
 package me.project.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CitaDTO implements Serializable{
 
 	private static final long serialVersionUID = -8698871845358111918L;
 	
 	private Long id;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-	private LocalDate fechaHora;
+	private String fechaHora; //formato "yyyy-MM-dd HH:mm:ss"
 	private String motivoCita;
-	private Long Diagnostico;
-	private Long Paciente;
-	private Long Medico;
+	private Long diagnostico;
+	private Long paciente;
+	private Long medico;
 	
 	public Long getId() {
 		return id;
@@ -23,10 +19,10 @@ public class CitaDTO implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public LocalDate getFechaHora() {
+	public String getFechaHora() {
 		return fechaHora;
 	}
-	public void setFechaHora(LocalDate fechaHora) {
+	public void setFechaHora(String fechaHora) {
 		this.fechaHora = fechaHora;
 	}
 	public String getMotivoCita() {
@@ -36,22 +32,22 @@ public class CitaDTO implements Serializable{
 		this.motivoCita = motivoCita;
 	}
 	public Long getDiagnostico() {
-		return Diagnostico;
+		return diagnostico;
 	}
 	public void setDiagnostico(Long diagnostico) {
-		Diagnostico = diagnostico;
+		this.diagnostico = diagnostico;
 	}
 	public Long getPaciente() {
-		return Paciente;
+		return paciente;
 	}
 	public void setPaciente(Long paciente) {
-		Paciente = paciente;
+		this.paciente = paciente;
 	}
 	public Long getMedico() {
-		return Medico;
+		return medico;
 	}
 	public void setMedico(Long medico) {
-		Medico = medico;
+		this.medico = medico;
 	}
 	
 	

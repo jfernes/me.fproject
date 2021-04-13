@@ -47,6 +47,12 @@ public class Medico extends Usuario{
 	public void setPacientes(ArrayList<Paciente> pacientes) {
 		this.pacientes = pacientes;
 	}
+
+	@Override
+	public String toString() {
+		return "Medico [numColegiado=" + numColegiado + ", pacientes=" + pacientes + "]";
+	}
+	
 	
 	
 	

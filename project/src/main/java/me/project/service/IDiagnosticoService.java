@@ -11,8 +11,6 @@ public interface IDiagnosticoService {
 	
 	public Optional<Diagnostico> findById(Long id);
 	
-	public List<Diagnostico> findByCita(Long citaId);
-	
 	public boolean save(Diagnostico diagnostico);
 
 	public void deleteById(Long id); 

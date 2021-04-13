@@ -35,7 +35,7 @@ CREATE TABLE MEDICO_PACIENTE(
 CREATE TABLE CITA(
 	id NUMBER(20,0) 	NOT NULL, --todas los valores posibles de un long
 	motivo_cita VARCHAR2(500) NOT NULL,
-	fecha_hora DATE NOT NULL, 
+	fecha_hora TIMESTAMP(2) NOT NULL, 
 	diagnostico NUMBER(20,0) NULL,
     medico NUMBER(20,0) NOT NULL,
     paciente NUMBER(20,0) 	NOT NULL,
@@ -50,9 +50,7 @@ CREATE TABLE DIAGNOSTICO(
 	id NUMBER(20) NOT NULL,
 	valoracion_especialista VARCHAR2(500) NOT NULL,
 	enfermedad VARCHAR2(100) NOT NULL,
-	cita NUMBER(20) NOT NULL,
-	CONSTRAINT diag_pk PRIMARY KEY(id),
-	CONSTRAINT diag_fk_cita FOREIGN KEY(id) REFERENCES CITA(id)
+	CONSTRAINT diag_pk PRIMARY KEY(id)
 );
 
 ALTER TABLE CITA ADD CONSTRAINT cita_fk_diag FOREIGN KEY (diagnostico) REFERENCES DIAGNOSTICO(id);

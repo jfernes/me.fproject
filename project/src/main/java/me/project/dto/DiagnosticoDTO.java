@@ -9,7 +9,6 @@ public class DiagnosticoDTO implements Serializable{
 	private Long id;
 	private String valoracionEspecialista;
 	private String enfermedad;
-	private Long cita;
 	
 	public Long getId() {
 		return id;
@@ -28,12 +27,6 @@ public class DiagnosticoDTO implements Serializable{
 	}
 	public void setEnfermedad(String enfermedad) {
 		this.enfermedad = enfermedad;
-	}
-	public Long getCita() {
-		return cita;
-	}
-	public void setCita(Long cita) {
-		this.cita = cita;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
