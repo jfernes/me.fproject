@@ -28,8 +28,8 @@ public class MedicoController {
 	
 	@Autowired
 	private IMedicoService service;
-	
-	private Converter converter = Converter.getConverter();
+	@Autowired
+	private Converter converter;
 
 	@GetMapping
 	public ResponseEntity<List<MedicoDTO>> read(){

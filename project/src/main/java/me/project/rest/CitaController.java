@@ -19,12 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import me.project.dto.CitaDTO;
 import me.project.dto.DiagnosticoDTO;
 import me.project.model.entities.Cita;
-import me.project.model.entities.Diagnostico;
 import me.project.model.entities.Medico;
 import me.project.model.entities.Paciente;
 import me.project.rest.converter.Converter;
 import me.project.service.ICitaService;
-import me.project.service.IDiagnosticoService;
 import me.project.service.IMedicoService;
 import me.project.service.IPacienteService;
 
@@ -39,14 +37,11 @@ public class CitaController {
 	@Autowired
 	private IPacienteService pService;
 	@Autowired
-	private IDiagnosticoService dService;
-	
-	private Converter converter = Converter.getConverter();
+	private Converter converter;
 	
 	
 	@PostMapping
 	public ResponseEntity<String> create (@RequestBody CitaDTO citaDTO) {
-		System.out.println("el medico: " + citaDTO.getMedico() + " el paciente: " + citaDTO.getPaciente());
 		Optional<Paciente> paciente = pService.findById(citaDTO.getPaciente());
 		Optional<Medico> medico = mService.findById(citaDTO.getMedico());
 		if (!medico.isPresent() || !paciente.isPresent())

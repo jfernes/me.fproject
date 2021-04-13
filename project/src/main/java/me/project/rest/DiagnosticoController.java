@@ -25,7 +25,8 @@ public class DiagnosticoController {
 	
 	@Autowired
 	private IDiagnosticoService service;
-	private Converter converter = Converter.getConverter();
+	@Autowired
+	private Converter converter;
 	
 	@GetMapping
 	public ResponseEntity<List<DiagnosticoDTO>> read(){

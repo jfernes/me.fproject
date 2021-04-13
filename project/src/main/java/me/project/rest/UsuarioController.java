@@ -25,9 +25,8 @@ public class UsuarioController {
 	
 	@Autowired
 	private IUsuarioService service;
-	private Converter converter = Converter.getConverter(); 
-	
-	
+	@Autowired
+	private Converter converter;
 	
 	@PostMapping
 	public ResponseEntity<String> create (@RequestBody UsuarioDTO usuarioDTO) {

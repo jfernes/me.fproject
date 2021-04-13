@@ -19,21 +19,9 @@ import me.project.model.entities.Paciente;
 import me.project.model.entities.Usuario;
 
 @Component
-public class Converter {
+public class Converter implements IConverter{
 	
-	private static Converter converter;
-	
-	private ModelMapper mapper;
-	
-	private Converter() {
-		mapper = new ModelMapper();
-	}
-	
-	public static Converter getConverter() {
-		if (converter == null)
-			converter = new Converter();
-		return converter;
-	}
+	private ModelMapper mapper = new ModelMapper();
 	
 	public Usuario UDTOtoU(UsuarioDTO usuarioDTO) {
 		Usuario usuario = mapper.map(usuarioDTO, Usuario.class);

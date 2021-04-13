@@ -28,7 +28,8 @@ public class PacienteController {
 
 	@Autowired
 	private IPacienteService service;
-	private Converter converter = Converter.getConverter();
+	@Autowired
+	private Converter converter;
 	
 	@GetMapping
 	public ResponseEntity<List<PacienteDTO>> read(){
