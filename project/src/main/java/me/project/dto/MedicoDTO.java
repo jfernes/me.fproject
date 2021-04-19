@@ -15,8 +15,8 @@ public class MedicoDTO implements Serializable{
 	private String usuario;
 	private String clave;
 	private String numColegiado;
-	
 	private List<Long> pacientes;
+	
 	public Long getId() {
 		return id;
 	}
