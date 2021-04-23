@@ -17,4 +17,8 @@ public interface IMedicoService {
 	public List<Paciente> findPacientes(Long id);
 	
 	public Boolean addPaciente(Long medicoId, Long pacienteId);
+
+	Optional<Medico> findByUsuario(String usuario);
+
+	Optional<Medico> login(String Usuario, String clave);
 }

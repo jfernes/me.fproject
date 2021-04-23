@@ -3,7 +3,6 @@ package me.project.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +11,6 @@ import me.project.model.entities.Medico;
 import me.project.model.entities.Paciente;
 import me.project.repository.IMedicoDAO;
 import me.project.repository.IPacienteDAO;
-import oracle.jdbc.OracleDatabaseException;
 
 @Service
 public class PacienteService implements IPacienteService{
@@ -32,6 +30,16 @@ public class PacienteService implements IPacienteService{
 	@Transactional(readOnly = true)
 	public Optional<Paciente> findById(Long id) {
 		return dao.findById(id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Paciente> findByUsuario(String usuario){
+		Optional<Paciente> opt = Optional.empty();
+		List<Paciente> l = dao.findByUsuario(usuario);
+		if (!l.isEmpty())
+			opt = Optional.of(l.get(0));
+		return opt;
 	}
 
 	@Override
@@ -73,6 +81,15 @@ public class PacienteService implements IPacienteService{
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public Optional<Paciente> login (String usuario, String clave){
+		Optional<Paciente> opt = Optional.empty();
+		List<Paciente> l = dao.findByUsuario(usuario);
+		if (l.isEmpty() || !l.get(0).getClave().equals(clave))
+			return opt;
+		return opt = Optional.of(l.get(0));
 	}
 
 }

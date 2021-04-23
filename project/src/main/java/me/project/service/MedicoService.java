@@ -31,6 +31,16 @@ public class MedicoService implements IMedicoService{
 	public Optional<Medico> findById(Long id) {
 		return dao.findById(id);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Medico> findByUsuario(String usuario){
+		Optional<Medico> opt = Optional.empty();
+		List<Medico> l = dao.findByUsuario(usuario);
+		if (!l.isEmpty())
+			opt = Optional.of(l.get(0));
+		return opt;
+	}
 
 	@Override
 	@Transactional
@@ -73,6 +83,15 @@ public class MedicoService implements IMedicoService{
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public Optional<Medico> login (String usuario, String clave){
+		Optional<Medico> opt = Optional.empty();
+		List<Medico> l = dao.findByUsuario(usuario);
+		if (l.isEmpty() || !l.get(0).getClave().equals(clave))
+			return opt;
+		return opt = Optional.of(l.get(0));
 	}
 	
 	

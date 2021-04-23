@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import me.project.model.entities.Paciente;
 import me.project.rest.converter.Converter;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/pacientes")
 public class PacienteController {
 
@@ -55,6 +57,15 @@ public class PacienteController {
 		return ResponseEntity.notFound().build();
 	}
 	
+	@GetMapping("/u/{usuario}")
+	public ResponseEntity<PacienteDTO> findById(@PathVariable String usuario){
+		Optional<Paciente> opt = service.findByUsuario(usuario);
+		if (opt.isPresent()) {
+			return ResponseEntity.ok(converter.PtoPDTO(opt.get()));
+		}
+		return ResponseEntity.notFound().build();
+	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteById(@PathVariable Long id){
 		service.deleteById(id);
@@ -68,6 +79,16 @@ public class PacienteController {
 		if (service.addMedico(pacienteId, medicoId)) {
 			return ResponseEntity.ok("Paciente insertado correctamente");
 		}
+		return ResponseEntity.notFound().build();
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<Paciente> login(@RequestBody ObjectNode obj){
+		String usuario = obj.get("usuario").asText();
+		String clave = obj.get("clave").asText();
+		Optional<Paciente> opt = service.login(usuario, clave);
+		if (opt.isPresent())
+			return ResponseEntity.ok(opt.get());
 		return ResponseEntity.notFound().build();
 	}
 	
