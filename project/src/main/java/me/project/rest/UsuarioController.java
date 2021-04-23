@@ -34,7 +34,7 @@ public class UsuarioController {
 		if (service.save(usuario)) {
 			return ResponseEntity.ok("Usuario creado correctamente");
 		}
-		return ResponseEntity.ok("Usuario ya existe");
+		return ResponseEntity.status(412).build();
 			
 	}
 	

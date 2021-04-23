@@ -42,10 +42,9 @@ public class MedicoController {
 	@PostMapping
 	public ResponseEntity<String> create(@RequestBody MedicoDTO medicoDTO) {
 		Medico medico = converter.MDTOtoM(medicoDTO);
-		if (service.save(medico)) {
+		if (service.save(medico)) 
 			return ResponseEntity.ok("Medico creado correctamente");
-		}
-		return ResponseEntity.status(409).build();
+		return ResponseEntity.status(412).build();
 	}
 	
 	@GetMapping("/{id}")

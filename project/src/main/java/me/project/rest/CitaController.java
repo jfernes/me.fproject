@@ -45,12 +45,12 @@ public class CitaController {
 		Optional<Paciente> paciente = pService.findById(citaDTO.getPaciente());
 		Optional<Medico> medico = mService.findById(citaDTO.getMedico());
 		if (!medico.isPresent() || !paciente.isPresent())
-			return ResponseEntity.status(409).build();
+			return ResponseEntity.status(412).build();
 		Cita cita = converter.CDTOtoC(citaDTO, medico.get(), paciente.get()); 
 		if (service.save(cita)) {
 			return ResponseEntity.ok("Cita creada correctamente");
 		}
-		return ResponseEntity.status(409).build();
+		return ResponseEntity.status(412).build();
 	} 
 	
 	@GetMapping
@@ -99,14 +99,14 @@ public class CitaController {
 		Optional<Cita> opt = service.findById(citaId);
 		if (opt.isPresent() && opt.get().getDiagnostico() != null)
 			return ResponseEntity.ok(converter.DtoDDTO(opt.get().getDiagnostico()));
-		return ResponseEntity.status(409).build();
+		return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping("/diagnostico/{citaId}")
 	public ResponseEntity<String> addDiagnostico(@PathVariable Long citaId, @RequestBody DiagnosticoDTO diagnosticoDTO){
 		if (service.addDiagnostico(citaId, converter.DDTOtoD(diagnosticoDTO)))
 			return ResponseEntity.ok("Diágnostico guardado correctamente");
-		return ResponseEntity.status(409).build();
+		return ResponseEntity.status(412).build();
 	}
 	
 	@DeleteMapping("/{id}")

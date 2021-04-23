@@ -35,11 +35,12 @@ public class MedicoService implements IMedicoService{
 	@Override
 	@Transactional
 	public Boolean save(Medico medico) {
-		if (dao.findById(medico.getId()).isPresent()) {
-			return false;
+		if (dao.findByUsuario(medico.getUsuario()).isEmpty()) {
+			dao.save(medico);
+			return true;
 		}
-		dao.save(medico);
-		return true;
+		return false;
+		
 	}
 
 	@Override

@@ -17,5 +17,7 @@ public interface IPacienteDAO extends JpaRepository<Paciente, Long>{
 			+ "    WHERE medico = ?1)",
 			nativeQuery = true)
 	public List<Medico> findMedicos(Long id);
+	
+	public List<Paciente> findByUsuario(String Usuario);
 
 }

@@ -3,6 +3,7 @@ package me.project.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import me.project.model.entities.Medico;
 import me.project.model.entities.Paciente;
 import me.project.repository.IMedicoDAO;
 import me.project.repository.IPacienteDAO;
+import oracle.jdbc.OracleDatabaseException;
 
 @Service
 public class PacienteService implements IPacienteService{
@@ -35,11 +37,11 @@ public class PacienteService implements IPacienteService{
 	@Override
 	@Transactional
 	public Boolean save(Paciente paciente) {
-		if (dao.findById(paciente.getId()).isPresent()) {
-			return false;
+		if (dao.findByUsuario(paciente.getUsuario()).isEmpty()) {
+			dao.save(paciente);
+			return true;
 		}
-		dao.save(paciente);
-		return true;
+		return false;	
 	}
 
 	@Override

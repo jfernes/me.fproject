@@ -42,7 +42,7 @@ public class DiagnosticoController {
 		if (service.save(diagnostico)) {
 			return ResponseEntity.ok("Diagnostico creado correctamente");
 		}
-		return ResponseEntity.status(409).build();
+		return ResponseEntity.status(412).build();
 	}
 	
 	@GetMapping("/{id}")

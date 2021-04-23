@@ -43,7 +43,7 @@ public class PacienteController {
 	public ResponseEntity<String> create(@RequestBody PacienteDTO pacienteDTO) {
 		if (service.save(converter.PDTOtoP(pacienteDTO)))
 			return ResponseEntity.ok("Paciente creado correctamente");
-		return ResponseEntity.status(409).build();
+		return ResponseEntity.status(412).build();
 	}
 	
 	@GetMapping("/{id}")

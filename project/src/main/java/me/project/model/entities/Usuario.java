@@ -12,7 +12,7 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
-	@Column(name = "usuario")
+	@Column(name = "usuario", unique = true)
 	private String usuario;
 	@Column(name = "nombre")
 	private String nombre;
