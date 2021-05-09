@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import me.project.dto.MedicoDTO;
+import me.project.dto.MessageDTO;
 import me.project.model.entities.Medico;
 import me.project.service.IMedicoService;
-import oracle.jdbc.proxy.annotation.Post;
 import me.project.rest.converter.Converter;
 
 @RestController
@@ -35,63 +35,63 @@ public class MedicoController {
 	private Converter converter;
 
 	@GetMapping
-	public ResponseEntity<List<MedicoDTO>> read(){
+	public ResponseEntity<MessageDTO> read(){
 		List<MedicoDTO> out = new ArrayList<MedicoDTO>();
 		service.findAll().stream()
 			.forEach(m -> out.add(converter.MtoMDTO(m)));
-		return ResponseEntity.ok(out);
+		return ResponseEntity.ok(new MessageDTO(200, out));
 	}
 	
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody MedicoDTO medicoDTO) {
+	public ResponseEntity<MessageDTO> create(@RequestBody MedicoDTO medicoDTO) {
 		Medico medico = converter.MDTOtoM(medicoDTO);
 		if (service.save(medico)) 
-			return ResponseEntity.ok("Medico creado correctamente");
-		return ResponseEntity.status(412).build();
+			return ResponseEntity.ok(new MessageDTO(200, "Médico creado correctamente"));;
+		return ResponseEntity.ok(new MessageDTO(412, null));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<MedicoDTO> findById(@PathVariable Long id){
+	public ResponseEntity<MessageDTO> findById(@PathVariable Long id){
 		Optional<Medico> opt = service.findById(id);
 		if (opt.isPresent()) {
-			return ResponseEntity.ok(converter.MtoMDTO(opt.get()));
+			return ResponseEntity.ok(new MessageDTO(200, converter.MtoMDTO(opt.get())));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 	@GetMapping("/u/{usuario}")
-	public ResponseEntity<MedicoDTO> findByUsuario(@PathVariable String usuario){
+	public ResponseEntity<MessageDTO> findByUsuario(@PathVariable String usuario){
 		Optional<Medico> opt = service.findByUsuario(usuario);
 		if (opt.isPresent()) {
-			return ResponseEntity.ok(converter.MtoMDTO(opt.get()));
+			return ResponseEntity.ok(new MessageDTO(200, converter.MtoMDTO(opt.get())));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable Long id){
+	public ResponseEntity<MessageDTO> deleteById(@PathVariable Long id){
 		service.deleteById(id);
-		return ResponseEntity.ok("Medico eliminado correctamente");
+		return ResponseEntity.ok(new MessageDTO(200, "Medico eliminado correctamente"));
 	}
 	
 	@PutMapping
-	public ResponseEntity<String> addPaciente(@RequestBody ObjectNode obj){
+	public ResponseEntity<MessageDTO> addPaciente(@RequestBody ObjectNode obj){
 		Long medicoId = obj.get("medicoId").asLong();
 		Long pacienteId = obj.get("pacienteId").asLong();
 		if (service.addPaciente(medicoId, pacienteId)) {
-			return ResponseEntity.ok("Paciente insertado correctamente");
+			return ResponseEntity.ok(new MessageDTO(200, "Paciente insertado correctamente"));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<Medico> login(@RequestBody ObjectNode obj){
+	public ResponseEntity<MessageDTO> login(@RequestBody ObjectNode obj){
 		String usuario = obj.get("usuario").asText();
 		String clave = obj.get("clave").asText();
 		Optional<Medico> opt = service.login(usuario, clave);
 		if (opt.isPresent())
-			return ResponseEntity.ok(opt.get());
-		return ResponseEntity.notFound().build();
+			return ResponseEntity.ok(new MessageDTO(200, converter.MtoMDTO(opt.get())));
+		return ResponseEntity.ok(new MessageDTO(404, null));
 
 	}
 }

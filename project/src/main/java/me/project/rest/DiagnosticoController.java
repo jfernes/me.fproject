@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import me.project.service.IDiagnosticoService;
 import me.project.dto.DiagnosticoDTO;
+import me.project.dto.MessageDTO;
 import me.project.model.entities.Diagnostico;
 import me.project.rest.converter.Converter;
 
@@ -31,35 +32,35 @@ public class DiagnosticoController {
 	private Converter converter;
 	
 	@GetMapping
-	public ResponseEntity<List<DiagnosticoDTO>> read(){
+	public ResponseEntity<MessageDTO> read(){
 		List<DiagnosticoDTO> out = new ArrayList<DiagnosticoDTO>();
 		service.findAll().stream()
 			.forEach(d -> out.add(converter.DtoDDTO(d)));
-		return ResponseEntity.ok(out);
+		return ResponseEntity.ok(new MessageDTO(200, out));
 	}
 	
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody DiagnosticoDTO diagnosticoDTO) {
+	public ResponseEntity<MessageDTO> create(@RequestBody DiagnosticoDTO diagnosticoDTO) {
 		Diagnostico diagnostico = converter.DDTOtoD(diagnosticoDTO);
 		if (service.save(diagnostico)) {
-			return ResponseEntity.ok("Diagnostico creado correctamente");
+			return ResponseEntity.ok(new MessageDTO(200, "Diágnostico creado correctamente"));
 		}
-		return ResponseEntity.status(412).build();
+		return ResponseEntity.ok(new MessageDTO(412, null));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<DiagnosticoDTO> findById(@PathVariable Long id){
+	public ResponseEntity<MessageDTO> findById(@PathVariable Long id){
 		Optional<Diagnostico> opt = service.findById(id);
 		if (opt.isPresent()) {
-			return ResponseEntity.ok(converter.DtoDDTO(opt.get()));
+			return ResponseEntity.ok(new MessageDTO(200, converter.DtoDDTO(opt.get())));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable Long id){
+	public ResponseEntity<MessageDTO> deleteById(@PathVariable Long id){
 		service.deleteById(id);
-		return ResponseEntity.ok("Diagnostico eliminado correctamente");
+		return ResponseEntity.ok(new MessageDTO(200, "Diagnóstico eliminado correctamente"));
 	}
 	
 

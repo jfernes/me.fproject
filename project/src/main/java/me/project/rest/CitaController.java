@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import me.project.dto.CitaDTO;
 import me.project.dto.DiagnosticoDTO;
+import me.project.dto.MessageDTO;
 import me.project.model.entities.Cita;
 import me.project.model.entities.Medico;
 import me.project.model.entities.Paciente;
@@ -43,78 +44,78 @@ public class CitaController {
 	
 	
 	@PostMapping
-	public ResponseEntity<String> create (@RequestBody CitaDTO citaDTO) {
+	public ResponseEntity<MessageDTO> create (@RequestBody CitaDTO citaDTO) {
 		Optional<Paciente> paciente = pService.findById(citaDTO.getPaciente());
 		Optional<Medico> medico = mService.findById(citaDTO.getMedico());
 		if (!medico.isPresent() || !paciente.isPresent())
-			return ResponseEntity.status(412).build();
+			return ResponseEntity.ok(new MessageDTO(404, null));
 		Cita cita = converter.CDTOtoC(citaDTO, medico.get(), paciente.get()); 
 		if (service.save(cita)) {
-			return ResponseEntity.ok("Cita creada correctamente");
+			return ResponseEntity.ok(new MessageDTO(200, "Diágnostico guardado correctamente"));
 		}
-		return ResponseEntity.status(412).build();
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	} 
 	
 	@GetMapping
-	public ResponseEntity<List<CitaDTO>> read(){
+	public ResponseEntity<MessageDTO> read(){
 		List<CitaDTO> out = new ArrayList<CitaDTO>();
 		service.findAll().stream()
 			.forEach(c -> out.add(converter.CtoCDTO(c)));
-		return ResponseEntity.ok(out);
+		return ResponseEntity.ok(new MessageDTO(200, out));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<CitaDTO> findById (Long id){
+	public ResponseEntity<MessageDTO> findById (Long id){
 		Optional<Cita> opt = service.findById(id);
 		if (opt.isPresent()) {
-			return ResponseEntity.ok(converter.CtoCDTO(opt.get()));
+			return ResponseEntity.ok(new MessageDTO(200, converter.CtoCDTO(opt.get())));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 	@GetMapping("/medico/{id}")
-	public ResponseEntity<List<CitaDTO>> findByMedico(@PathVariable Long id){	
+	public ResponseEntity<MessageDTO> findByMedico(@PathVariable Long id){	
 		List<CitaDTO> out = new ArrayList<CitaDTO>();
 		service.findByMedico(id).stream()
 			.forEach(c -> out.add(converter.CtoCDTO(c)));
-		return ResponseEntity.ok(out);
+		return ResponseEntity.ok(new MessageDTO(200, out));
 	}
 	
 	@GetMapping("/paciente/{id}")
-	public ResponseEntity<List<CitaDTO>> findByPaciente(@PathVariable Long id){	
+	public ResponseEntity<MessageDTO> findByPaciente(@PathVariable Long id){	
 		List<CitaDTO> out = new ArrayList<CitaDTO>();
 		service.findByPaciente(id).stream()
 			.forEach(c -> out.add(converter.CtoCDTO(c)));
-		return ResponseEntity.ok(out);
+		return ResponseEntity.ok(new MessageDTO(200, out));
 	}
 	
 	@GetMapping("/date")
-	public ResponseEntity<List<CitaDTO>> findByFecha(@RequestBody Date date){	
+	public ResponseEntity<MessageDTO> findByFecha(@RequestBody Date date){	
 		List<CitaDTO> out = new ArrayList<CitaDTO>();
 		service.findByDate(date).stream()
 			.forEach(c -> out.add(converter.CtoCDTO(c)));
-		return ResponseEntity.ok(out);
+		return ResponseEntity.ok(new MessageDTO(200, out));
 	}
 	
 	@GetMapping("/diagnostico/{citaId}")
-	public ResponseEntity<DiagnosticoDTO> getDiagnosticoByCita(@PathVariable Long citaId){	
+	public ResponseEntity<MessageDTO> getDiagnosticoByCita(@PathVariable Long citaId){	
 		Optional<Cita> opt = service.findById(citaId);
 		if (opt.isPresent() && opt.get().getDiagnostico() != null)
-			return ResponseEntity.ok(converter.DtoDDTO(opt.get().getDiagnostico()));
-		return ResponseEntity.notFound().build();
+			return ResponseEntity.ok(new MessageDTO(200, converter.DtoDDTO(opt.get().getDiagnostico())));
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 	@PostMapping("/diagnostico/{citaId}")
-	public ResponseEntity<String> addDiagnostico(@PathVariable Long citaId, @RequestBody DiagnosticoDTO diagnosticoDTO){
+	public ResponseEntity<MessageDTO> addDiagnostico(@PathVariable Long citaId, @RequestBody DiagnosticoDTO diagnosticoDTO){
 		if (service.addDiagnostico(citaId, converter.DDTOtoD(diagnosticoDTO)))
-			return ResponseEntity.ok("Diágnostico guardado correctamente");
-		return ResponseEntity.status(412).build();
+			return ResponseEntity.ok(new MessageDTO(200, "Diágnostico guardado correctamente"));
+		return ResponseEntity.ok(new MessageDTO(412, null));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable Long id){
+	public ResponseEntity<MessageDTO> deleteById(@PathVariable Long id){
 		service.deleteById(id);
-		return ResponseEntity.ok("Medico eliminado correctamente");
+		return ResponseEntity.ok(new MessageDTO(200, "Diágnostico eliminado correctamente"));
 	}
 	
 	

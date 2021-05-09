@@ -20,7 +20,7 @@ public interface IPacienteService {
 	
 	public boolean addMedico(Long pacienteId, Long medicoId);
 
-	Optional<Paciente> findByUsuario(String usuario);
+	public Optional<Paciente> findByUsuario(String usuario);
 
-	Optional<Paciente> login(String usuario, String clave);
+	public Optional<Paciente> login(String usuario, String clave);
 }

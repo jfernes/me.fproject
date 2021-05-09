@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import me.project.service.IPacienteService;
+import me.project.dto.MessageDTO;
 import me.project.dto.PacienteDTO;
 import me.project.model.entities.Paciente;
 import me.project.rest.converter.Converter;
@@ -34,62 +35,62 @@ public class PacienteController {
 	private Converter converter;
 	
 	@GetMapping
-	public ResponseEntity<List<PacienteDTO>> read(){
+	public ResponseEntity<MessageDTO> read(){
 		List<PacienteDTO> out = new ArrayList<PacienteDTO>();
 		service.findAll().stream()
 			.forEach(p -> out.add(converter.PtoPDTO(p)));
-		return ResponseEntity.ok(out);
+		return ResponseEntity.ok(new MessageDTO(200, out));
 	}
 	
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody PacienteDTO pacienteDTO) {
+	public ResponseEntity<MessageDTO> create(@RequestBody PacienteDTO pacienteDTO) {
 		if (service.save(converter.PDTOtoP(pacienteDTO)))
-			return ResponseEntity.ok("Paciente creado correctamente");
-		return ResponseEntity.status(412).build();
+			return ResponseEntity.ok(new MessageDTO(200, "Paciente creado correctamente"));
+		return ResponseEntity.ok(new MessageDTO(412, null));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PacienteDTO> findById(@PathVariable Long id){
+	public ResponseEntity<MessageDTO> findById(@PathVariable Long id){
 		Optional<Paciente> opt = service.findById(id);
 		if (opt.isPresent()) {
-			return ResponseEntity.ok(converter.PtoPDTO(opt.get()));
+			return ResponseEntity.ok(new MessageDTO(200, converter.PtoPDTO(opt.get())));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 	@GetMapping("/u/{usuario}")
-	public ResponseEntity<PacienteDTO> findById(@PathVariable String usuario){
+	public ResponseEntity<MessageDTO> findById(@PathVariable String usuario){
 		Optional<Paciente> opt = service.findByUsuario(usuario);
 		if (opt.isPresent()) {
-			return ResponseEntity.ok(converter.PtoPDTO(opt.get()));
+			return ResponseEntity.ok(new MessageDTO(200, converter.PtoPDTO(opt.get())));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable Long id){
+	public ResponseEntity<MessageDTO> deleteById(@PathVariable Long id){
 		service.deleteById(id);
-		return ResponseEntity.ok("Paciente eliminado correctamente");
+		return ResponseEntity.ok(new MessageDTO(200, "Paciente eliminado correctamente"));
 	}
 	
 	@PutMapping
-	public ResponseEntity<String> addPaciente(@RequestBody ObjectNode obj){
+	public ResponseEntity<MessageDTO> addPaciente(@RequestBody ObjectNode obj){
 		Long medicoId = obj.get("medicoId").asLong();
 		Long pacienteId = obj.get("pacienteId").asLong();
 		if (service.addMedico(pacienteId, medicoId)) {
-			return ResponseEntity.ok("Paciente insertado correctamente");
+			return ResponseEntity.ok(new MessageDTO(200, "Paciente insertado correctamente"));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<Paciente> login(@RequestBody ObjectNode obj){
+	public ResponseEntity<MessageDTO> login(@RequestBody ObjectNode obj){
 		String usuario = obj.get("usuario").asText();
 		String clave = obj.get("clave").asText();
 		Optional<Paciente> opt = service.login(usuario, clave);
 		if (opt.isPresent())
-			return ResponseEntity.ok(opt.get());
-		return ResponseEntity.notFound().build();
+			return ResponseEntity.ok(new MessageDTO(200, converter.PtoPDTO(opt.get())));
+		return ResponseEntity.ok(new MessageDTO(404, null));
 	}
 	
 }
