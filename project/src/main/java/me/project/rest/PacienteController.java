@@ -59,7 +59,7 @@ public class PacienteController {
 	}
 	
 	@GetMapping("/u/{usuario}")
-	public ResponseEntity<MessageDTO> findById(@PathVariable String usuario){
+	public ResponseEntity<MessageDTO> findByUsuario(@PathVariable String usuario){
 		Optional<Paciente> opt = service.findByUsuario(usuario);
 		if (opt.isPresent()) {
 			return ResponseEntity.ok(new MessageDTO(200, converter.PtoPDTO(opt.get())));
